@@ -72,12 +72,12 @@ class Game:
 
         self.start_amount_entry = Entry(self.entry_error_frame,
                                         font="Arial 15 bold", width=10)
-        self.start_amount_entry.grid(row=0, column=0)
+        self.start_amount_entry.grid(row=0, column=0, padx=2)
 
         # Play button goes here (row 2)
         self.play_button = Button(self.entry_error_frame, text="Enter",
                                   bg="#FFFF33", font="Arial 15 bold")
-        self.play_button.grid(row=0, column=1)
+        self.play_button.grid(row=0, column=1, padx=2)
 
         # enter to revel boxes
 
