@@ -30,9 +30,6 @@ class Game:
         print(rounds)
         print(starting_score)
 
-        self.questions = ["a", 'b', "c"]
-        print(self.questions)
-
         # initialize variables
         self.score = IntVar()
 
@@ -58,10 +55,8 @@ class Game:
                                    padx=10, pady=10)
         self.heading_label.grid(row=0)
 
-        num = (random.randint(0, 2))
-
         # Heading row
-        self.heading_label = Label(self.game_frame, text="Question #{}: {}".format(rounds, self.questions[num]),
+        self.heading_label = Label(self.game_frame, text="Question #{}:".format(rounds),
                                    font="Arial 20", fg="#991212",
                                    padx=10, pady=10)
         self.heading_label.grid(row=1)
