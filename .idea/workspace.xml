@@ -62,9 +62,11 @@
       <file leaf-file-name="03_Questions_v2.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/03_Questions_v2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="32" column="18" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
-              <folding />
+            <state relative-caret-position="1427">
+              <caret line="105" column="52" selection-start-line="105" selection-start-column="52" selection-end-line="105" selection-end-column="52" />
+              <folding>
+                <element signature="e#116#611#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -140,6 +142,7 @@
         <option value="$PROJECT_DIR$/01_Start.py" />
         <option value="$PROJECT_DIR$/03_Questions.py" />
         <option value="$PROJECT_DIR$/02_Game.py" />
+        <option value="$PROJECT_DIR$/03_Questions_v2.py" />
       </list>
     </option>
   </component>
@@ -862,9 +865,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/03_Questions_v2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="32" column="18" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
-          <folding />
+        <state relative-caret-position="1427">
+          <caret line="105" column="52" selection-start-line="105" selection-start-column="52" selection-end-line="105" selection-end-column="52" />
+          <folding>
+            <element signature="e#116#611#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
