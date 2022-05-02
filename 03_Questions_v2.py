@@ -118,11 +118,11 @@ class Game:
                                   command=self.to_quit)
         self.quit_button.grid(row=6, pady=10)
 
-    def to_stats(self, game_history, game_stats):
-        GameStats(self, game_history, game_stats)
+    # def to_stats(self, game_history, game_stats):
+        # GameStats(self, game_history, game_stats)
 
-    def to_help(self):
-        get_help = Help(self)
+    # def to_help(self):
+        # get_help = Help(self)
 
     def reveal_boxes(self):
         # get the score from the initial function...
