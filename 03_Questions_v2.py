@@ -16,10 +16,10 @@ class Start:
     def to_game(self):
 
         # retrieve starting balance
-        starting_balance = 50
+        given_answer = 50
         stakes = 1
 
-        Game(self, stakes, starting_balance)
+        Game(self, stakes, given_answer)
 
         # hide pop up window
         root.withdraw()
@@ -31,6 +31,7 @@ class Game:
         print(starting_score)
 
         self.questions = ["a", 'b', "c"]
+        self.answers = ["A", "B", "C"]
         print(self.questions)
 
         # initialize variables
@@ -67,7 +68,7 @@ class Game:
         self.heading_label.grid(row=1)
 
         # info section(row 2)
-        start_text = "Current Score: {}".format(rounds * 5)
+        start_text = "Current Score: {} \nSkips Remaining: ?".format(rounds * 5)
 
         self.score_frame = Frame(self.game_frame)
         self.score_frame.grid(row=2)
@@ -76,18 +77,28 @@ class Game:
                                  fg="#129944", wrap=300, justify=LEFT)
         self.score_label.grid(row=2, pady=10)
 
-        # Entry box, button and error label (row 2 column 0)
+        # Entry box, button and error label
         self.entry_error_frame = Frame(self.game_frame, width=200)
-        self.entry_error_frame.grid(row=3)
+        self.entry_error_frame.grid(row=3, column=0)
 
-        self.start_amount_entry = Entry(self.entry_error_frame,
-                                        font="Arial 15 bold", width=10)
-        self.start_amount_entry.grid(row=0, column=0, padx=2)
+        self.answer_entry = Entry(self.entry_error_frame,
+                                  font="Arial 15 bold", width=10)
+        self.answer_entry.grid(row=0, column=0, padx=2)
 
         # Play button goes here (row 2)
         self.play_button = Button(self.entry_error_frame, text="Enter",
-                                  bg="#FFFF33", font="Arial 15 bold")
-        self.play_button.grid(row=0, column=1, padx=2)
+                                  bg="#FFFF33", font="Arial 15 bold",
+                                  command=self.check_answer)
+        self.play_button.grid(row=2, column=0, padx=2)
+
+        self.next_button = Button(self.entry_error_frame, text="Skip",
+                                  bg="#33ff3d", font="Arial 15 bold")
+        self.next_button.grid(row=2, column=1, padx=2)
+
+        self.amount_error_label = Label(self.entry_error_frame, fg="maroon",
+                                        text="", font="Arial 10 bold", wrap=275,
+                                        justify=LEFT)
+        self.amount_error_label.grid(row=1, columnspan=2, pady=5)
 
         # enter to revel boxes
 
@@ -118,11 +129,61 @@ class Game:
                                   command=self.to_quit)
         self.quit_button.grid(row=6, pady=10)
 
-    # def to_stats(self, game_history, game_stats):
-        # GameStats(self, game_history, game_stats)
+    def check_answer(self):
+        given_answer = self.answer_entry.get()
 
-    # def to_help(self):
-        # get_help = Help(self)
+        # Set error background colours and assume no errors
+        error_back = "#ffafaf"
+        has_errors = "no"
+
+        # change background to white
+        self.answer_entry.config(bg="white")
+        self.amount_error_label.config(text="")
+
+        # disable all stakes buttons in case user changes mind and decreases amount entered
+        self.play_button.config(state=DISABLED)
+
+        try:
+            given_answer = str(given_answer)  # string?
+
+            if given_answer < 5:
+                has_errors = "yes"
+                error_feedback = "Sorry, the least you can play with is $5"
+            elif given_answer > 50:
+                has_errors = "yes"
+                error_feedback = "Too High! The most you can risk in this game is $50"
+
+            elif given_answer >= 15:
+                # enable all buttons
+                self.lowstakes_button.config(state=NORMAL)
+                self.medstakes_button.config(state=NORMAL)
+                self.highstakes_button.config(state=NORMAL)
+
+            elif given_answer >= 10:
+                # enable low and medium stakes buttons
+                self.lowstakes_button.config(state=NORMAL)
+                self.medstakes_button.config(state=NORMAL)
+
+            else:
+                self.lowstakes_button.config(state=NORMAL)
+
+        except ValueError:
+            has_errors = "yes"
+            error_feedback = "spelling?"
+
+        if has_errors == "yes":
+            self.answer_entry.config(bg=error_back)
+            self.amount_error_label.config(text=error_feedback)
+
+        else:
+            # set starting balance to amount entered by user
+            self.starting_funds.set(given_answer)
+
+    def to_stats(self, game_history, game_stats):
+        GameStats(self, game_history, game_stats)
+
+    def to_help(self):
+        get_help = Help(self)
 
     def reveal_boxes(self):
         # get the score from the initial function...
