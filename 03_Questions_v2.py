@@ -88,7 +88,7 @@ class Game:
         # Play button goes here (row 2)
         self.play_button = Button(self.entry_error_frame, text="Enter",
                                   bg="#FFFF33", font="Arial 15 bold",
-                                  command=self.check_answer)
+                                  command=self.check_answer(rounds))
         self.play_button.grid(row=2, column=0, padx=2)
 
         self.next_button = Button(self.entry_error_frame, text="Skip",
@@ -101,9 +101,8 @@ class Game:
         self.amount_error_label.grid(row=1, columnspan=2, pady=5)
 
         # enter to revel boxes
-
         self.play_button.focus()
-        self.play_button.bind('<Return>', lambda e: self.reveal_boxes())
+        self.play_button.bind('<Return>', lambda e: self.check_answer(rounds))
         self.play_button.grid(row=3)
 
         # help and game stats button (row 5)
