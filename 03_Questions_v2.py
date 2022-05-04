@@ -129,7 +129,7 @@ class Game:
                                   command=self.to_quit)
         self.quit_button.grid(row=6, pady=10)
 
-    def check_answer(self):
+    def check_answer(self, rounds):
         given_answer = self.answer_entry.get()
 
         # Set error background colours and assume no errors
@@ -146,26 +146,11 @@ class Game:
         try:
             given_answer = str(given_answer)  # string?
 
-            if given_answer < 5:
-                has_errors = "yes"
-                error_feedback = "Sorry, the least you can play with is $5"
-            elif given_answer > 50:
-                has_errors = "yes"
-                error_feedback = "Too High! The most you can risk in this game is $50"
+            #  if len(self.all_calc_list) == 0:
 
-            elif given_answer >= 15:
-                # enable all buttons
-                self.lowstakes_button.config(state=NORMAL)
-                self.medstakes_button.config(state=NORMAL)
-                self.highstakes_button.config(state=NORMAL)
+            if given_answer == self.answers[{}].format(rounds):
+                print("h")
 
-            elif given_answer >= 10:
-                # enable low and medium stakes buttons
-                self.lowstakes_button.config(state=NORMAL)
-                self.medstakes_button.config(state=NORMAL)
-
-            else:
-                self.lowstakes_button.config(state=NORMAL)
 
         except ValueError:
             has_errors = "yes"
