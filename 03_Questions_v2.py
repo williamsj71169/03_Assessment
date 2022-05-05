@@ -59,10 +59,10 @@ class Game:
                                    padx=10, pady=10)
         self.heading_label.grid(row=0)
 
-        num = (random.randint(0, 2))
+        random_num = (random.randint(0, 2))
 
         # Heading row
-        self.heading_label = Label(self.game_frame, text="Question #{}: {}".format(rounds, self.questions[num]),
+        self.heading_label = Label(self.game_frame, text="Question #{}: {}".format(rounds, self.questions[random_num]),
                                    font="Arial 20", fg="#991212",
                                    padx=10, pady=10)
         self.heading_label.grid(row=1)
@@ -88,7 +88,7 @@ class Game:
         # Play button goes here (row 2)
         self.play_button = Button(self.entry_error_frame, text="Enter",
                                   bg="#FFFF33", font="Arial 15 bold",
-                                  command=self.check_answer(rounds))
+                                  command=self.check_answer(random_num))
         self.play_button.grid(row=2, column=0, padx=2)
 
         self.next_button = Button(self.entry_error_frame, text="Skip",
@@ -102,7 +102,7 @@ class Game:
 
         # enter to revel boxes
         self.play_button.focus()
-        self.play_button.bind('<Return>', lambda e: self.check_answer(rounds))
+        self.play_button.bind('<Return>', lambda e: self.check_answer(random_num))
         self.play_button.grid(row=3)
 
         # help and game stats button (row 5)
@@ -128,7 +128,7 @@ class Game:
                                   command=self.to_quit)
         self.quit_button.grid(row=6, pady=10)
 
-    def check_answer(self, rounds):
+    def check_answer(self, random_num):
         given_answer = self.answer_entry.get()
 
         # Set error background colours and assume no errors
@@ -147,9 +147,8 @@ class Game:
 
             #  if len(self.all_calc_list) == 0:
 
-            if given_answer == self.answers[{}].format(rounds):
+            if given_answer == self.answers[random_num]:
                 print("h")
-
 
         except ValueError:
             has_errors = "yes"
@@ -161,7 +160,8 @@ class Game:
 
         else:
             # set starting balance to amount entered by user
-            self.starting_funds.set(given_answer)
+            # self.starting_funds.set(given_answer)
+            self.answer_entry.config(bg="#33ff3d")
 
     def to_stats(self, game_history, game_stats):
         GameStats(self, game_history, game_stats)
