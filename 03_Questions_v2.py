@@ -62,7 +62,8 @@ class Game:
         random_num = (random.randint(0, 2))
 
         # Heading row
-        self.heading_label = Label(self.game_frame, text="Question #{}: {}".format(rounds, self.questions[random_num]),
+        self.heading_label = Label(self.game_frame,
+                                   text="Question #{}: {}".format(rounds, self.questions[random_num]),
                                    font="Arial 20", fg="#991212",
                                    padx=10, pady=10)
         self.heading_label.grid(row=1)
