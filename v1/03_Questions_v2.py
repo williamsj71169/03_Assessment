@@ -86,29 +86,32 @@ class Game:
                                   font="Arial 15 bold", width=10)
         self.answer_entry.grid(row=0, column=0, padx=2)
 
+        self.enter_help_frame = Frame(self.game_frame)
+        self.enter_help_frame.grid(row=5)
+
         # Play button goes here (row 2)
-        self.play_button = Button(self.entry_error_frame, text="Enter",
-                                  bg="#FFFF33", font="Arial 15 bold",
-                                  command=self.check_answer(random_num))
-        self.play_button.grid(row=2, column=0, padx=2)
+        self.play_button = Button(self.enter_help_frame, text="Enter",
+                                  bg="#FFFF33", font="Arial 15 bold"
+                                  )
+        self.play_button.grid(row=0, column=0, padx=2)
 
-        self.next_button = Button(self.entry_error_frame, text="Skip",
+        self.next_button = Button(self.enter_help_frame, text="Skip",
                                   bg="#33ff3d", font="Arial 15 bold")
-        self.next_button.grid(row=2, column=1, padx=2)
+        self.next_button.grid(row=0, column=1, padx=2)
 
-        self.amount_error_label = Label(self.entry_error_frame, fg="maroon",
+        self.amount_error_label = Label(self.game_frame, fg="maroon",
                                         text="", font="Arial 10 bold", wrap=275,
                                         justify=LEFT)
-        self.amount_error_label.grid(row=1, columnspan=2, pady=5)
+        self.amount_error_label.grid(row=4, columnspan=2, pady=5)
 
         # enter to revel boxes
         self.play_button.focus()
         self.play_button.bind('<Return>', lambda e: self.check_answer(random_num))
-        self.play_button.grid(row=3)
+        # self.play_button.grid(row=3)
 
         # help and game stats button (row 5)
         self.export_help_frame = Frame(self.game_frame)
-        self.export_help_frame.grid(row=5, pady=10)
+        self.export_help_frame.grid(row=6, pady=10)
 
         # Help button
         self.help_button = Button(self.export_help_frame, text="Help / Rules",
@@ -125,9 +128,9 @@ class Game:
 
         # quit button
         self.quit_button = Button(self.game_frame, text="Quit", fg="white",
-                                  bg="#ff00dd", font="Arial 15 bold", width=20,
+                                  bg="#ff00dd", font="Arial 15 bold", width=20,    # 21 to make in line with help.
                                   command=self.to_quit)
-        self.quit_button.grid(row=6, pady=10)
+        self.quit_button.grid(row=7, pady=10)
 
     def check_answer(self, random_num):
         given_answer = self.answer_entry.get()
