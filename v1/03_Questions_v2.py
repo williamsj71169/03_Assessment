@@ -91,8 +91,8 @@ class Game:
 
         # Play button goes here (row 2)
         self.play_button = Button(self.enter_help_frame, text="Enter",
-                                  bg="#FFFF33", font="Arial 15 bold"
-                                  )
+                                  bg="#FFFF33", font="Arial 15 bold",
+                                  command=self.check_answer)  # adding - (random_num) - will glitch
         self.play_button.grid(row=0, column=0, padx=2)
 
         self.next_button = Button(self.enter_help_frame, text="Skip",
@@ -107,7 +107,6 @@ class Game:
         # enter to revel boxes
         self.play_button.focus()
         self.play_button.bind('<Return>', lambda e: self.check_answer(random_num))
-        # self.play_button.grid(row=3)
 
         # help and game stats button (row 5)
         self.export_help_frame = Frame(self.game_frame)
@@ -140,8 +139,8 @@ class Game:
         has_errors = "no"
 
         # change background to white
-        self.answer_entry.config(bg="white")
-        self.amount_error_label.config(text="")
+        # self.answer_entry.config(bg="white")
+        # self.amount_error_label.config(text="")
 
         # disable all stakes buttons in case user changes mind and decreases amount entered
         self.play_button.config(state=DISABLED)
