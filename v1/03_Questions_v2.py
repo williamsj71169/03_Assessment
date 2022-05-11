@@ -133,6 +133,7 @@ class Game:
 
     def check_answer(self, random_num):
         given_answer = self.answer_entry.get()
+        print(random_num)
 
         # Set error background colours and assume no errors
         error_back = "#ffafaf"
