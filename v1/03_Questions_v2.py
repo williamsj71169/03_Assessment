@@ -1,5 +1,5 @@
 from tkinter import *
-from functools import partial  # to prevent unwanted windows
+# from functools import partial  # to prevent unwanted windows
 import random
 
 
@@ -115,14 +115,12 @@ class Game:
         # Help button
         self.help_button = Button(self.export_help_frame, text="Help / Rules",
                                   font="Arial 15 bold",
-                                  bg="#6200ff", fg="white",
-                                  command=self.to_help)
+                                  bg="#6200ff", fg="white")
         self.help_button.grid(row=0, column=0, padx=2)
 
         self.stats_button = Button(self.export_help_frame, text="Game Stats",
                                    font="Arial 15 bold",
-                                   bg="#00e5ff", fg="white",
-                                   command=lambda: self.to_stats(self.round_stats_list, self.game_stats_list))
+                                   bg="#00e5ff", fg="white")
         self.stats_button.grid(row=0, column=1, padx=2)
 
         # quit button
@@ -167,77 +165,6 @@ class Game:
             # self.starting_funds.set(given_answer)
             self.answer_entry.config(bg="#33ff3d")
 
-    def to_stats(self, game_history, game_stats):
-        GameStats(self, game_history, game_stats)
-
-    def to_help(self):
-        get_help = Help(self)
-
-    def reveal_boxes(self):
-        # get the score from the initial function...
-        current_score = self.score.get()
-        rounds_multiplier = self.multiplier.get()
-
-        round_winnings = 0
-        prizes = []
-
-        for item in range(0, 3):
-            prize_num = random.randint(1, 100)
-
-            if 0 < prize_num <= 5:
-                prize = "gold\n(${})".format(5 * rounds_multiplier)
-                round_winnings += 5 * rounds_multiplier
-
-            elif 5 < prize_num <= 25:
-                prize = "silver\n(${})".format(2 * rounds_multiplier)
-                round_winnings += 2 * rounds_multiplier
-
-            elif 25 < prize_num <= 65:
-                prize = "copper\n(${})".format(1 * rounds_multiplier)
-                round_winnings += rounds_multiplier
-
-            else:
-                prize = "lead\n($0)"
-
-            prizes.append(prize)
-
-        # deduct cost of game
-        current_score -= 5 * rounds_multiplier
-
-        # add winnings
-        current_score += round_winnings
-
-        # set score to new score
-        self.score.set(current_score)
-        # update game_stats_list with current score (replace item in
-        # position 1 with current score
-        self.game_stats_list[1] = current_score
-
-        score_statement = "Game Cost: ${} \nPayback: ${} \n" \
-                          "Current Score: ${}".format(5*rounds_multiplier,
-                                                      round_winnings,
-                                                      current_score)
-        # Edit Label so user can see their score
-        self.score_label.configure(text=score_statement)
-
-        if current_score < 5 * rounds_multiplier:
-            self.play_button.config(state=DISABLED)
-            self.game_box.focus()
-            self.play_button.config(text="Game Over")
-
-            score_statement = "Current score: ${}\n" \
-                              "Your score in too low. You can only quit " \
-                              "or view your stats. Sorry about that.".format(current_score)
-            self.score_label.config(fg="#660000", font="Arial 10 bold",
-                                    text=score_statement)
-
-        # add round results to stats list
-        round_summary = "{} | {} | {} - Cost: ${} |" \
-                        "Payback: ${} | Current Score: " \
-                        "${}".format(prizes[0], prizes[1], prizes[2],
-                                     5 * rounds_multiplier, round_winnings, current_score)
-        self.round_stats_list.append(round_summary)
-        print(self.round_stats_list)
 
     def to_quit(self):
         root.destroy()
