@@ -90,9 +90,9 @@ class Game:
         self.enter_help_frame.grid(row=5)
 
         # Play button goes here (row 2)
-        self.play_button = Button(self.enter_help_frame, text="Enter",
+        self.enter_button = Button(self.enter_help_frame, text="Enter",
                                   bg="#FFFF33", font="Arial 15 bold")  # adding - (random_num) - will glitch
-        self.play_button.grid(row=0, column=0, padx=2)
+        self.enter_button.grid(row=0, column=0, padx=2)
 
         self.next_button = Button(self.enter_help_frame, text="Skip",
                                   bg="#33ff3d", font="Arial 15 bold")
@@ -104,8 +104,8 @@ class Game:
         self.amount_error_label.grid(row=4, columnspan=2, pady=5)
 
         # enter to revel boxes
-        self.play_button.focus()
-        self.play_button.bind('<Return>', lambda e: self.check_answer(random_num))
+        self.enter_button.focus()
+        self.enter_button.bind('<Return>', lambda e: self.check_answer(random_num))
 
         # help and game stats button (row 5)
         self.export_help_frame = Frame(self.game_frame)
@@ -141,7 +141,7 @@ class Game:
         # self.amount_error_label.config(text="")
 
         # disable all stakes buttons in case user changes mind and decreases amount entered
-        self.play_button.config(state=DISABLED)
+        self.enter_button.config(state=DISABLED)
 
         try:
             given_answer = str(given_answer)  # string?
