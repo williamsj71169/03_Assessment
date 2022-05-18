@@ -131,7 +131,9 @@ class Game:
 
     def check_answer(self, random_num):
         given_answer = self.answer_entry.get()
-        print(random_num)
+        print("number:{}".format(random_num))
+        print(self.answer_entry)
+        print("given answer:{}".format(given_answer))
 
         # Set error background colours and assume no errors
         error_back = "#ffafaf"
