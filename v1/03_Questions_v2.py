@@ -158,14 +158,14 @@ class Game:
             has_errors = "yes"
             error_feedback = "spelling?"
 
-            if has_errors == "yes":
-                self.answer_entry.config(bg=error_back)
-                self.amount_error_label.config(text=error_feedback)
+        if has_errors == "yes":
+            self.answer_entry.config(bg=error_back)
+            self.amount_error_label.config(text=error_feedback)
 
-            else:
-                # set starting balance to amount entered by user
-                # self.starting_funds.set(given_answer)
-                self.answer_entry.config(bg="#33ff3d")
+        else:
+            # set starting balance to amount entered by user
+            # self.starting_funds.set(given_answer)
+            self.answer_entry.config(bg="#33ff3d")
 
         # do stuff here?
 
