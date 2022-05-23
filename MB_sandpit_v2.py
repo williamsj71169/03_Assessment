@@ -6,6 +6,9 @@ import random
 class Start:
     def __init__(self, parent):
 
+        self.questions = ["a", 'b', "c"]
+        self.answers = ["A", "B", "C"]
+
         # giu to get starting balance and stakes
         self.start_frame = Frame(padx=10, pady=10)
         self.start_frame.grid()
@@ -32,16 +35,16 @@ class Start:
         self.entry_error_frame = Frame(self.start_frame, width=200)
         self.entry_error_frame.grid(row=2)
 
-        self.start_amount_entry = Entry(self.entry_error_frame,
-                                        font="Arial 19 bold", width=10)
-        self.start_amount_entry.grid(row=0, column=0)
+        self.answer_entry = Entry(self.entry_error_frame,
+                                  font="Arial 19 bold", width=10)
+        self.answer_entry.grid(row=0, column=0)
 
         random_num = (random.randint(0, 2))
 
         self.add_funds_button = Button(self.entry_error_frame,
                                        font="Arial 14 bold",
                                        text="Add Funds",
-                                       command=self.check_funds)
+                                       command=self.check_answer(random_num))
         self.add_funds_button.grid(row=0, column=1)
 
         self.amount_error_label = Label(self.entry_error_frame, fg="maroon",
@@ -87,6 +90,46 @@ class Start:
 
     def to_help(self):
         get_help = Help(self)
+
+    def check_answer(self, random_num):
+        given_answer = self.answer_entry.get()
+        print("number:{}".format(random_num))
+        print(self.answer_entry)
+        print("given answer:{}".format(given_answer))
+
+        # Set error background colours and assume no errors
+        error_back = "#ffafaf"
+        has_errors = "no"
+
+        # change background to white
+        self.answer_entry.config(bg="white")
+        # self.amount_error_label.config(text="")
+
+        # disable all stakes buttons in case user changes mind and decreases amount entered
+        # self.enter_button.config(state=DISABLED)
+
+        try:
+            given_answer = str(given_answer)  # string?
+
+            #  if len(self.all_calc_list) == 0:
+
+            if given_answer == self.answers[random_num]:
+                print("h")
+
+        except ValueError:
+            has_errors = "yes"
+            error_feedback = "spelling?"
+
+        if has_errors == "yes":
+            self.answer_entry.config(bg=error_back)
+            self.amount_error_label.config(text=error_feedback)
+
+        else:
+            # set starting balance to amount entered by user
+            # self.starting_funds.set(given_answer)
+            self.answer_entry.config(bg="#33ff3d")
+
+        # do stuff here?
 
     def check_funds(self):
         starting_balance = self.start_amount_entry.get()

@@ -144,7 +144,7 @@ class Game:
         # self.amount_error_label.config(text="")
 
         # disable all stakes buttons in case user changes mind and decreases amount entered
-        # self.enter_button.config(state=DISABLED)
+        # self.enter_button.config(state=DISABLED)     # will glitch
 
         try:
             given_answer = str(given_answer)  # string?
