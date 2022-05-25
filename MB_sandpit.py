@@ -60,13 +60,12 @@ class Start:
         self.start_amount_entry.grid(row=0, column=0)
         print("a")
 
-        random_num = (random.randint(0, 2))
-
         self.add_funds_button = Button(self.entry_error_frame,
                                        font="Arial 14 bold",
                                        text="Add Funds",
                                        command=self.check_funds)
         self.add_funds_button.grid(row=0, column=1)
+        print("b")
 
         self.amount_error_label = Label(self.entry_error_frame, fg="maroon",
                                         text="", font="Arial 10 bold", wrap=275,

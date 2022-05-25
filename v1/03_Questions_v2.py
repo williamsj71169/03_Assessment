@@ -104,10 +104,6 @@ class Game:
                                         justify=LEFT)
         self.amount_error_label.grid(row=4, columnspan=2, pady=5)
 
-        # enter to revel boxes
-        self.enter_button.focus()
-        self.enter_button.bind('<Return>', lambda e: self.check_answer(random_num))
-
         # help and game stats button (row 5)
         self.export_help_frame = Frame(self.game_frame)
         self.export_help_frame.grid(row=6, pady=10)
