@@ -92,7 +92,7 @@ class Game:
         # Play button goes here (row 2)
         self.enter_button = Button(self.enter_help_frame, text="Enter",
                                    bg="#FFFF33", font="Arial 15 bold",
-                                   command=self.check_answer(random_num))  # adding - (random_num) - will glitch
+                                   command=self.check_answer(random_num))  #
         self.enter_button.grid(row=0, column=0, padx=2)
 
         self.next_button = Button(self.enter_help_frame, text="Skip",

@@ -3,21 +3,43 @@ from functools import partial  # to prevent unwanted windows
 import random
 
 
+class Intro:
+    def __init__(self, parent):
+
+        # GUI to get starting balance and stakes
+        self.start_frame = Frame(padx=10, pady=10)
+        self.start_frame.grid()
+
+        self.push_me_button = Button(text="Push Me", command=self.to_start)
+        self.push_me_button.grid(row=0, pady=10)
+
+    def to_start(self):
+
+        Start(self)
+
+        # hide pop up window
+        root.withdraw()
+
+
 class Start:
     def __init__(self, parent):
 
-        # giu to get starting balance and stakes
-        self.start_frame = Frame(padx=10, pady=10)
+        # GUI setup
+        self.game_box = Toplevel()
+        self.start_frame = Frame(self.game_box)
         self.start_frame.grid()
+        print("a")
 
         # set initial balance to zero
         self.starting_funds = IntVar()
         self.starting_funds.set(0)
+        print("a")
 
         # mystery heading (row 0)
         self.mystery_box_label = Label(self.start_frame, text="Mystery Box Game",
                                        font="Arial 19 bold")
         self.mystery_box_label.grid(row=0)
+        print("a")
 
         # Initial instructions (row 1)
         self.mystery_instructions = Label(self.start_frame, font="Arial 10 italic",
@@ -27,6 +49,7 @@ class Start:
                                                "stakes the more you can win!",
                                           wrap=275, justify=LEFT, padx=10, pady=10)
         self.mystery_instructions.grid(row=1)
+        print("a")
 
         # Entry box, button and error label (row 2)
         self.entry_error_frame = Frame(self.start_frame, width=200)
@@ -35,6 +58,7 @@ class Start:
         self.start_amount_entry = Entry(self.entry_error_frame,
                                         font="Arial 19 bold", width=10)
         self.start_amount_entry.grid(row=0, column=0)
+        print("a")
 
         random_num = (random.randint(0, 2))
 
@@ -53,7 +77,7 @@ class Start:
         self.stakes_frame = Frame(self.start_frame)
         self.stakes_frame.grid(row=3)
 
-        # Buttons go here  ***************
+        # Buttons go here  ****************
         button_font = "Arial 12 bold"
 
         # yellow low stakes button
@@ -624,5 +648,5 @@ class Export:
 if __name__ == "__main__":
     root = Tk()
     root.title("Mystery Box Game")
-    something = Start(root)
+    something = Intro(root)
     root.mainloop()
