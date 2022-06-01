@@ -95,9 +95,9 @@ class Game:
                                    command=self.check_answer(random_num))  #
         self.enter_button.grid(row=0, column=0, padx=2)
 
-        self.next_button = Button(self.enter_help_frame, text="Skip",
+        self.skip_button = Button(self.enter_help_frame, text="Skip",
                                   bg="#33ff3d", font="Arial 15 bold")
-        self.next_button.grid(row=0, column=1, padx=2)
+        self.skip_button.grid(row=0, column=1, padx=2)
 
         self.amount_error_label = Label(self.game_frame, fg="maroon",
                                         text="", font="Arial 10 bold", wrap=275,
@@ -137,7 +137,7 @@ class Game:
 
         # change background to white
         self.answer_entry.config(bg="white")
-        # self.amount_error_label.config(text="")
+        # self.amount_error_label.config(text="")     # will glitch
 
         # disable all stakes buttons in case user changes mind and decreases amount entered
         # self.enter_button.config(state=DISABLED)     # will glitch
@@ -154,9 +154,9 @@ class Game:
             has_errors = "yes"
             error_feedback = "spelling?"
 
-        if has_errors == "yes":
+        if has_errors == "yes":   # or given_answer == ""
             self.answer_entry.config(bg=error_back)
-            self.amount_error_label.config(text=error_feedback)
+            # self.amount_error_label.config(text=error_feedback)
 
         else:
             # set starting balance to amount entered by user
