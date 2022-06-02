@@ -10,51 +10,42 @@ class Start:
         self.start_frame = Frame(padx=10, pady=10)
         self.start_frame.grid()
 
-        self.push_me_button = Button(text="Push Me", command=self.to_game)
-        self.push_me_button.grid(row=0, pady=10)
+        # quiz title
+        self.quiz_title = Label(self.start_frame,
+                                text="Assessment Game!",
+                                font="Arial 19 bold")
+        self.quiz_title.grid(row=0)
 
-    def to_game(self):
+        # info section
+        self.info_section = Label(self.start_frame,
+                                  text="This is a maths quiz, the "
+                                       "questions are infinite and "
+                                       "you can quit at any time.",
+                                  font="Arial 10 italic", wrap=275,
+                                  justify=LEFT, padx=10, pady=10)
+        self.info_section.grid(row=1)
 
-        # num of rounds
-        rounds = 10
+        # play button
+        self.play_button = Button(self.start_frame,
+                                  font="Arial 14 bold",
+                                  text="PLAY")
+        self.play_button.grid(row=2)
 
-        Game(self, rounds)
+        # quit button
+        self.quit_button = Button(self.start_frame,
+                                  font="Arial 12 bold",
+                                  text="Quit")
+        self.quit_button.grid(row=3, column=1, pady=5, padx=5)
 
-        # hide pop up window
-        root.withdraw()
-
-
-class Game:
-    def __init__(self, partner, rounds):
-        starting_score = 0
-        print(rounds)
-
-        self.questions = ["a", 'b', "c"]
-        self.answers = ["A", "B", "C"]
-        print(self.questions)
-
-        # GUI setup
-        self.game_box = Toplevel()
-        self.game_frame = Frame(self.game_box)
-        self.game_frame.grid()
-
-        # Heading row
-        self.heading_label = Label(self.game_frame, text="Play!",
-                                   font="Arial 24 bold",
-                                   padx=10, pady=10)
-        self.heading_label.grid(row=0)
-
-        random_num = (random.randint(0, 2))
-
-        self.heading_label = Label(self.game_frame,
-                                   text="Question #{}: {}".format(rounds, self.questions[random_num]),
-                                   font="Arial 20", fg="#991212",
-                                   padx=10, pady=10)
-        self.heading_label.grid(row=1)
+        # help button
+        self.help_button = Button(self.start_frame,
+                                  font="Arial 12 bold",
+                                  text="Help")
+        self.help_button.grid(row=3, column=0, pady=5, padx=5)
 
 # main routine
 if __name__ == "__main__":
     root = Tk()
-    root.title("change me")
+    root.title("Assessment Game")
     something = Start(root)
     root.mainloop()
