@@ -83,7 +83,7 @@ class Game:
         self.entry_error_frame.grid(row=3, column=0)
 
         self.answer_entry = Entry(self.entry_error_frame,
-                                  font="Arial 15 bold", width=10)
+                                  font="Arial 15 bold", width=15)
         self.answer_entry.grid(row=0, column=0, padx=2)
 
         self.enter_help_frame = Frame(self.game_frame)
@@ -91,7 +91,8 @@ class Game:
 
         # Play button goes here (row 2)
         self.enter_button = Button(self.enter_help_frame, text="Enter",
-                                  bg="#FFFF33", font="Arial 15 bold")  # adding - (random_num) - will glitch
+                                   bg="#FFFF33", font="Arial 15 bold",
+                                   command=lambda: self.check_answer(random_num))  # adding - (random_num) - will glitch
         self.enter_button.grid(row=0, column=0, padx=2)
 
         self.next_button = Button(self.enter_help_frame, text="Skip",
@@ -142,6 +143,7 @@ class Game:
 
         # disable all stakes buttons in case user changes mind and decreases amount entered
         self.enter_button.config(state=DISABLED)
+        error_feedback = "Wrong?"
 
         try:
             given_answer = str(given_answer)  # string?
@@ -153,9 +155,12 @@ class Game:
 
         except ValueError:
             has_errors = "yes"
-            error_feedback = "spelling?"
 
         if has_errors == "yes":
+            self.answer_entry.config(bg=error_back)
+            self.amount_error_label.config(text=error_feedback)
+
+        elif given_answer != self.answers[random_num]:
             self.answer_entry.config(bg=error_back)
             self.amount_error_label.config(text=error_feedback)
 
@@ -163,7 +168,6 @@ class Game:
             # set starting balance to amount entered by user
             # self.starting_funds.set(given_answer)
             self.answer_entry.config(bg="#33ff3d")
-
 
     def to_quit(self):
         root.destroy()
