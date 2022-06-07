@@ -21,57 +21,43 @@ class Start:
 
         # Initial instructions (row 1)
         self.mystery_instructions = Label(self.start_frame, font="Arial 10 italic",
-                                          text="Welcome, Pick how many rounds you would "
-                                               "like to play!",
+                                          text="This is a maths quiz, the "
+                                               "questions are infinite and "
+                                               "you can quit at any time.",
                                           wrap=275, justify=LEFT, padx=10, pady=10)
         self.mystery_instructions.grid(row=1)
 
         # Entry box, button and error label (row 2)
-        '''self.entry_error_frame = Frame(self.start_frame, width=200)
-        self.entry_error_frame.grid(row=1)'''
+        self.entry_error_frame = Frame(self.start_frame, width=200)
+        self.entry_error_frame.grid(row=2)
 
-        '''self.play_button = Button(self.entry_error_frame,
+        self.play_button = Button(self.entry_error_frame,
                                   font="Arial 14 bold",
-                                  text="Play", padx=10, pady=10,
+                                  text="Play",
                                   command=self.to_game)
-        self.play_button.grid(row=0, column=0)'''
+        self.play_button.grid(row=2)
 
-        # button frame ()row 3
+        # button frame (row 3)
         self.rounds_frame = Frame(self.start_frame)
         self.rounds_frame.grid(row=3)
 
         # Buttons go here  ***************
         button_font = "Arial 14 bold"
 
-        # yellow low rounds button
-        self.lowrounds_button = Button(self.rounds_frame, text="5 rounds",
-                                       command=lambda: self.to_game(1),
-                                       font=button_font, bg="yellow")
-        self.lowrounds_button.grid(row=0, column=0, pady=10)
-
-        # orange med rounds button
-        self.medrounds_button = Button(self.rounds_frame, text="10 Rounds",
-                                       command=lambda: self.to_game(2),
-                                       font=button_font, bg="orange")
-        self.medrounds_button.grid(row=0, column=1, padx=5, pady=10)
-
-        # red high rounds button
-        self.highrounds_button = Button(self.rounds_frame, text="15 Rounds",
-                                        command=lambda: self.to_game(3),
-                                        font=button_font, bg="red")
-        self.highrounds_button.grid(row=1, column=0, pady=10)
-
-        # red high rounds button
-        self.infin_button = Button(self.rounds_frame, text="Infinite",
-                                   command=lambda: self.to_game(4),
-                                   font=button_font, bg="#2bff00")
-        self.infin_button.grid(row=1, column=1, pady=10)
-
         # Help button
-        self.help_button = Button(self.start_frame, text="How to Play",
+        self.help_button = Button(self.rounds_frame, text="Help", padx=10,
                                   bg="#6200ff", fg="white", font=button_font,
                                   command=self.to_help)
-        self.help_button.grid(row=4, pady=10)
+        self.help_button.grid(row=3, pady=10, column=0)
+
+        # quit button
+        self.quit_button = Button(self.rounds_frame, text="Quit", fg="white",
+                                  bg="#ff00dd", font=button_font, padx=10,
+                                  command=self.to_quit)
+        self.quit_button.grid(row=3, pady=10, column=1, padx=10)
+
+    def to_quit(self):
+            root.destroy()
 
     def to_help(self):
         get_help = Help(self)
