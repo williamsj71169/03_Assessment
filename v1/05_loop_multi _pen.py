@@ -175,48 +175,54 @@ class Game:
         self.quit_button.grid(row=7, pady=10)
 
     def check_answer(self, random_num):
-        self.enter_button.config(state=NORMAL)
 
-        given_answer = self.answer_entry.get()
-        print(random_num)
+        # play_again loop start
+        self.quit_button.config(state=NORMAL)
+        while self.quit_button.config(state=NORMAL):
 
-        # Set error background colours and assume no errors
-        error_back = "#ffafaf"
-        has_errors = "no"
+            given_answer = self.answer_entry.get()
+            print(random_num)
 
-        # change background to white
-        # self.answer_entry.config(bg="white")
-        # self.amount_error_label.config(text="")
+            # Set error background colours and assume no errors
+            error_back = "#ffafaf"
+            has_errors = "no"
 
-        # disable all stakes buttons in case user changes mind and decreases amount entered
-        self.enter_button.config(state=DISABLED)
-        error_feedback = "Wrong!"
-        correct_feedback = "Right!"
+            # change background to white
+            # self.answer_entry.config(bg="white")
+            # self.amount_error_label.config(text="")
 
-        try:
-            given_answer = str(given_answer)  # string?
+            # disable all stakes buttons in case user changes mind and decreases amount entered
+            self.enter_button.config(state=DISABLED)
+            error_feedback = "Wrong!"
+            correct_feedback = "Right!"
 
-            #  if len(self.all_calc_list) == 0:
+            try:
+                given_answer = str(given_answer)  # string?
 
-            if given_answer == self.answers[random_num]:
-                print("h")
+                #  if len(self.all_calc_list) == 0:
 
-        except ValueError:
-            has_errors = "yes"
+                if given_answer == self.answers[random_num]:
+                    print("h")
 
-        if has_errors == "yes":
-            self.answer_entry.config(bg=error_back)
-            self.amount_error_label.config(text=error_feedback)
+            except ValueError:
+                has_errors = "yes"
 
-        elif given_answer != self.answers[random_num]:
-            self.answer_entry.config(bg=error_back)
-            self.amount_error_label.config(text=error_feedback)
+            if has_errors == "yes":
+                self.answer_entry.config(bg=error_back)
+                self.amount_error_label.config(text=error_feedback)
 
-        else:
-            # set starting balance to amount entered by user
-            # self.starting_funds.set(given_answer)
-            self.answer_entry.config(bg="#afffb2")
-            self.amount_error_label.config(text=correct_feedback, fg="#1abd1d")
+            elif given_answer != self.answers[random_num]:
+                self.answer_entry.config(bg=error_back)
+                self.amount_error_label.config(text=error_feedback)
+
+            else:
+                # set starting balance to amount entered by user
+                # self.starting_funds.set(given_answer)
+                self.answer_entry.config(bg="#afffb2")
+                self.amount_error_label.config(text=correct_feedback, fg="#1abd1d")
+
+            # play_again = (input("Push <enter> to play again/continue or any other key to quit"))
+            self.quit_button.config(state=NORMAL)
 
     def to_quit(self):
         root.destroy()
