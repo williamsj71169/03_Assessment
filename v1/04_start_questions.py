@@ -137,7 +137,7 @@ class Game:
         # Play button goes here (row 2)
         self.enter_button = Button(self.enter_help_frame, text="Enter",
                                    bg="#FFFF33", font="Arial 15 bold",
-                                   command=lambda: self.check_answer(random_num))  # adding - (random_num) - will glitch
+                                   command=lambda: self.check_answer(random_num, rounds))  # adding - (random_num) - will glitch
         self.enter_button.grid(row=0, column=0, padx=2)
 
         self.next_button = Button(self.enter_help_frame, text="Skip",
@@ -151,7 +151,7 @@ class Game:
 
         # enter to revel boxes
         self.enter_button.focus()
-        self.enter_button.bind('<Return>', lambda e: self.check_answer(random_num))
+        self.enter_button.bind('<Return>', lambda e: self.check_answer(random_num, rounds))
 
         # help and game stats button (row 5)
         self.export_help_frame = Frame(self.game_frame)
@@ -174,7 +174,7 @@ class Game:
                                   command=self.to_quit)
         self.quit_button.grid(row=7, pady=10)
 
-    def check_answer(self, random_num):
+    def check_answer(self, random_num, rounds):
         self.enter_button.config(state=NORMAL)
 
         given_answer = self.answer_entry.get()
@@ -212,11 +212,19 @@ class Game:
             self.answer_entry.config(bg=error_back)
             self.amount_error_label.config(text=error_feedback)
 
-        else:
+        elif given_answer == self.answers[random_num]:
             # set starting balance to amount entered by user
             # self.starting_funds.set(given_answer)
             self.answer_entry.config(bg="#afffb2")
             self.amount_error_label.config(text=correct_feedback, fg="#1abd1d")
+
+        # add round results to stats list
+        round_summary = "Question:{}:{} | "\
+                        "Given Answer:{} | " \
+                        "Correct Answer:{} ".format(rounds, self.questions[random_num], given_answer,
+                                                    self.answers[random_num])
+        self.round_stats_list.append(round_summary)
+        print(self.round_stats_list)
 
     def to_quit(self):
         root.destroy()
