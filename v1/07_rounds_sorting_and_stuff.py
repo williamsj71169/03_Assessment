@@ -76,7 +76,7 @@ class Game:
         print(rounds)
         print(starting_score)
 
-        file = open("young_transposed.csv", "r")
+        file = open("young_lower_t.csv", "r")
         csv_reader = csv.reader(file)
 
         lists_from_csv = []
@@ -85,8 +85,6 @@ class Game:
 
         self.questions = lists_from_csv[0]
         self.answers = lists_from_csv[1]
-
-        print(self.questions)
 
         # initialize variables
         self.score = IntVar()
@@ -121,7 +119,8 @@ class Game:
 
         # Heading row
         self.heading_label = Label(self.game_frame,
-                                   text="Question #{}: {}".format(rounds, self.questions[random_num]),
+                                   text="#{}: What is the name\n of a young {}".format(rounds,
+                                                                                       self.questions[random_num]),
                                    font="Arial 20", fg="#bd1a1a",
                                    padx=10, pady=10)
         self.heading_label.grid(row=1)
@@ -151,12 +150,8 @@ class Game:
         # Play button goes here (row 2)
         self.enter_button = Button(self.enter_help_frame, text="Enter",
                                    bg="#FFFF33", font="Arial 15 bold",
-                                   command=lambda: self.check_answer(random_num, rounds))  # adding - (random_num) - will glitch
+                                   command=lambda: self.check_answer(random_num, rounds, starting_score))
         self.enter_button.grid(row=0, column=0, padx=2)
-
-        self.next_button = Button(self.enter_help_frame, text="Skip?",
-                                  bg="#33ff3d", font="Arial 15 bold")
-        self.next_button.grid(row=0, column=1, padx=2)
 
         self.amount_error_label = Label(self.game_frame, fg="#bd1a1a",
                                         text="", font="Arial 10 bold", wrap=275,
@@ -165,7 +160,7 @@ class Game:
 
         # enter to revel boxes
         self.enter_button.focus()
-        self.enter_button.bind('<Return>', lambda e: self.check_answer(random_num, rounds))
+        self.enter_button.bind('<Return>', lambda e: self.check_answer(random_num, rounds, starting_score))
 
         # help and game stats button (row 5)
         self.export_help_frame = Frame(self.game_frame)
@@ -188,11 +183,12 @@ class Game:
                                   command=self.to_quit)
         self.quit_button.grid(row=7, pady=10)
 
-    def check_answer(self, random_num, rounds):
+    def check_answer(self, random_num, rounds, starting_score):
+        rounds = rounds + 1
+        print(rounds)
         self.enter_button.config(state=NORMAL)
 
-        given_answer = self.answer_entry.get()
-        print(random_num)
+        given_answer = self.answer_entry.get().lower()
 
         # Set error background colours and assume no errors
         error_back = "#ffafaf"
@@ -228,12 +224,14 @@ class Game:
             # self.starting_funds.set(given_answer)
             self.answer_entry.config(bg="#afffb2")
             self.amount_error_label.config(text=correct_feedback, fg="#1abd1d")
+            score = starting_score + 1
+            print("Score:{}".format(score))
 
         # add round results to stats list
         round_summary = "Question:{}:{} | "\
                         "Given Answer:{} | " \
-                        "Correct Answer:{} ".format(rounds, self.questions[random_num], given_answer,
-                                                    self.answers[random_num])
+                        "Correct Answer:{}".format(rounds, self.questions[random_num], given_answer,
+                                                   self.answers[random_num])
         self.round_stats_list.append(round_summary)
         print(self.round_stats_list)
 
