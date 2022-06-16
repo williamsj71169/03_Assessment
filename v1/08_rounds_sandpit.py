@@ -22,7 +22,7 @@ class Start:
 
         # Initial instructions (row 1)
         self.mystery_instructions = Label(self.start_frame, font="Arial 10 italic",
-                                          text="This is a maths quiz, the "
+                                          text="This is an animals and their young quiz, the "
                                                "questions are infinite and "
                                                "you can quit at any time.",
                                           wrap=275, justify=LEFT, padx=10, pady=10)
@@ -63,7 +63,7 @@ class Start:
 
         # retrieve starting score
         starting_score = self.starting_scores.get()
-        rounds = 1
+        rounds = 0
 
         Game(self, rounds, starting_score)
 
@@ -73,6 +73,7 @@ class Start:
 
 class Game:
     def __init__(self, partner, rounds, starting_score):
+        rounds += 1
         print(rounds)
         print(starting_score)
 
@@ -111,7 +112,7 @@ class Game:
                                    padx=10, pady=10)
         self.heading_label.grid(row=0)
 
-        random_num = random.randint(0, 113)
+        random_num = random.randint(0, 112)
 
         # print question and answer
         print("Question:{} | Answer:{}".format(self.questions[random_num], self.answers[random_num]))
@@ -193,16 +194,19 @@ class Game:
 
     def check_answer(self, random_num, rounds, starting_score):
         print("$$$$$$$$$$$$$")
-        print("round:{}".format(rounds))
+        print("rounds:{}".format(rounds))
 
-        if rounds == 2:
+        if rounds >= 2:
             print("**********************")
             random_num = random.randint(0, 113)
+
+            print("Question:{} | Answer:{}".format(self.questions[random_num], self.answers[random_num]))
 
             self.question_label.config(text="#{}: What is the name\n of a young {}".
                                        format(rounds, self.questions[random_num]))
 
-        self.enter_button.config(state=NORMAL)
+            self.enter_button.config(state=NORMAL)
+            self.next_button.config(state=DISABLED)
 
         given_answer = self.answer_entry.get().lower()
 
