@@ -113,15 +113,11 @@ class Game:
                                    padx=10, pady=10)
         self.heading_label.grid(row=0)
 
-        random_num = random.randint(0, 112)
-
-        # print question and answer
-        print("Question:{} | Answer:{}".format(self.questions[random_num], self.answers[random_num]))
-
         # Heading row
         self.question_label = Label(self.game_frame,
-                                    text="#{}: What is the name\n of a young {}".
-                                    format(rounds, self.questions[random_num]),
+                                    text="",
+                                    # text="#{}: What is the name\n of a young {}".
+                                    # format(rounds, self.questions[random_num]),
                                     font="Arial 20", fg="#bd1a1a",
                                     padx=10, pady=10)
         self.question_label.grid(row=1)
@@ -152,17 +148,17 @@ class Game:
         # Play button goes here (row 2)
         self.enter_button = Button(self.enter_help_frame, text="Enter",
                                    bg="#FFFF33", font="Arial 15 bold",
-                                   command=lambda: self.check_answer(random_num, rounds, starting_score))
+                                   command=lambda: self.check_answer(rounds, starting_score))
         self.enter_button.grid(row=0, column=0, padx=2)
 
         # enter to play
         # self.enter_button.focus()
-        # self.enter_button.bind('<Return>', lambda e: self.check_answer(random_num, rounds, starting_score))
+        # self.enter_button.bind('<Return>', lambda e: self.check_answer(rounds, starting_score))
         # self.enter_button.grid(row=0, column=0, padx=2)
 
         self.next_button = Button(self.enter_help_frame, text="Next",
                                   bg="#33ff3d", font="Arial 15 bold",
-                                  command=lambda: self.check_answer(random_num, rounds, starting_score))
+                                  command=lambda: self.check_answer(rounds, starting_score))
         self.next_button.grid(row=0, column=1, padx=2)
         self.next_button.config(state=DISABLED)
 
@@ -193,21 +189,20 @@ class Game:
                                   command=self.to_quit)
         self.quit_button.grid(row=7, pady=10)
 
-    def check_answer(self, random_num, rounds, starting_score):
+    def check_answer(self, rounds, starting_score):
         print("$$$$$$$$$$$$$")
         print("rounds:{}".format(rounds))
 
-        if self.round_list[-1] >= 2:
-            print("**********************")
-            random_num = random.randint(0, 113)
+        random_num = random.randint(0, 113)
 
-            print("Question:{} | Answer:{}".format(self.questions[random_num], self.answers[random_num]))
+        # print question and answer
+        print("Question:{} | Answer:{}".format(self.questions[random_num], self.answers[random_num]))
 
-            self.question_label.config(text="#{}: What is the name\n of a young {}".
-                                       format(rounds, self.questions[random_num]))
+        self.question_label.config(text="#{}: What is the name\n of a young {}".
+                                   format(rounds, self.questions[random_num]))
 
-            self.enter_button.config(state=NORMAL)
-            self.next_button.config(state=DISABLED)
+        self.enter_button.config(state=NORMAL)
+        self.next_button.config(state=DISABLED)
 
         given_answer = self.answer_entry.get().lower()
 
