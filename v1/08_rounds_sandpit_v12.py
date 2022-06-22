@@ -114,7 +114,7 @@ class Game:
                                    padx=10, pady=10)
         self.heading_label.grid(row=0)
 
-        random_num = random.randint(0, 112)
+        random_num = random.randint(0, 111)
 
         # print question and answer
         print("Question:{} | Answer:{}".format(self.questions[random_num], self.answers[random_num]))
@@ -194,6 +194,25 @@ class Game:
                                   command=self.to_quit)
         self.quit_button.grid(row=7, pady=10)
 
+    def next_game(self, starting_scores, rounds):
+        rounds_2 = self.round_list[-1]
+
+        print("**********************")
+        random_num = random.randint(0, 111)
+        print(random_num)
+
+        print("Question:{} | Answer:{}".format(self.questions[random_num], self.answers[random_num]))
+
+        self.question_label.config(text="#{}: What is the name\n of a young {}".
+                                   format(rounds_2, self.questions[random_num]))
+
+        self.answer_entry.delete(0, 'end')
+
+        self.enter_button.config(state=NORMAL)
+        self.next_button.config(state=DISABLED)
+
+        # self.check_answer(random_num, starting_scores)
+
     def check_answer(self, random_num, starting_score):
         rounds_2 = self.round_list[-1]
         print("rounds:{}".format(rounds_2))
@@ -222,12 +241,12 @@ class Game:
             has_errors = "yes"
 
         if has_errors == "yes":
-            self.answer_entry.config(bg=error_back, fg="red")
-            self.amount_error_label.config(text=error_feedback)
+            self.answer_entry.config(bg=error_back)
+            self.amount_error_label.config(text=error_feedback, fg="red")
 
         elif given_answer != self.answers[random_num]:
-            self.answer_entry.config(bg=error_back, fg="red")
-            self.amount_error_label.config(text=error_feedback)
+            self.answer_entry.config(bg=error_back)
+            self.amount_error_label.config(text=error_feedback, fg="red")
 
         elif given_answer == self.answers[random_num]:
             # set starting balance to amount entered by user
@@ -250,23 +269,6 @@ class Game:
         print("&&{}&&".format(rounds_2))
 
         root.withdraw()
-
-    def next_game(self, starting_scores, rounds):
-        rounds_2 = self.round_list[-1]
-
-        print("**********************")
-        random_num = random.randint(0, 113)
-        print(random_num)
-
-        print("Question:{} | Answer:{}".format(self.questions[random_num], self.answers[random_num]))
-
-        self.question_label.config(text="#{}: What is the name\n of a young {}".
-                                   format(rounds_2, self.questions[random_num]))
-
-        self.answer_entry.delete(0, 'end')
-
-        self.enter_button.config(state=NORMAL)
-        self.next_button.config(state=DISABLED)
 
     def to_quit(self):
         root.destroy()
