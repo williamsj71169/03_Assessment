@@ -116,6 +116,7 @@ class Game:
         self.heading_label.grid(row=0)
 
         random_num = random.randint(0, 111)
+        self.question_num.set(random_num)
 
         # print question and answer
         print("Question:{} | Answer:{}".format(self.questions[random_num], self.answers[random_num]))
@@ -154,7 +155,7 @@ class Game:
         # Play button goes here (row 2)
         self.enter_button = Button(self.enter_help_frame, text="Enter",
                                    bg="#FFFF33", font="Arial 15 bold",
-                                   command=lambda: self.check_answer(random_num, starting_score))
+                                   command=lambda: self.check_answer(starting_score))
         self.enter_button.grid(row=0, column=0, padx=2)
 
         # enter to play
@@ -164,7 +165,7 @@ class Game:
 
         self.next_button = Button(self.enter_help_frame, text="Next",
                                   bg="#33ff3d", font="Arial 15 bold",
-                                  command=lambda: self.next_game(random_num, starting_score))
+                                  command=lambda: self.next_game(starting_score))
         self.next_button.grid(row=0, column=1, padx=2)
         self.next_button.config(state=DISABLED)
 
@@ -195,14 +196,19 @@ class Game:
                                   command=self.to_quit)
         self.quit_button.grid(row=7, pady=10)
 
-    def next_game(self, starting_scores, rounds):
+    def next_game(self, starting_scores):
         rounds_2 = self.round_list[-1]
 
         print("**********************")
         random_num = random.randint(0, 111)
+        self.question_num.set(random_num)
         print(random_num)
 
         print("Question:{} | Answer:{}".format(self.questions[random_num], self.answers[random_num]))
+
+        # change background to white
+        self.answer_entry.config(bg="white")
+        self.amount_error_label.config(text="")
 
         self.question_label.config(text="#{}: What is the name\n of a young {}".
                                    format(rounds_2, self.questions[random_num]))
@@ -214,7 +220,9 @@ class Game:
 
         # self.check_answer(random_num, starting_scores)
 
-    def check_answer(self, random_num, starting_score):
+    def check_answer(self, starting_score):
+        random_num = self.question_num.get()
+        print("check_answer, random_num is {}".format(random_num))
         rounds_2 = self.round_list[-1]
         print("rounds:{}".format(rounds_2))
 

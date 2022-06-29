@@ -1,5 +1,5 @@
 from tkinter import *
-# from functools import partial  # to prevent unwanted windows
+from functools import partial  # to prevent unwanted windows
 import csv
 import random
 
@@ -22,7 +22,7 @@ class Start:
 
         # Initial instructions (row 1)
         self.mystery_instructions = Label(self.start_frame, font="Arial 10 italic",
-                                          text="This is a maths quiz, the "
+                                          text="This is an animals and their young quiz, the "
                                                "questions are infinite and "
                                                "you can quit at any time.",
                                           wrap=275, justify=LEFT, padx=10, pady=10)
@@ -63,7 +63,7 @@ class Start:
 
         # retrieve starting score
         starting_score = self.starting_scores.get()
-        rounds = 1
+        rounds = 0
 
         Game(self, rounds, starting_score)
 
@@ -73,6 +73,7 @@ class Start:
 
 class Game:
     def __init__(self, partner, rounds, starting_score):
+        rounds += 1
         print(rounds)
         print(starting_score)
 
@@ -88,6 +89,7 @@ class Game:
 
         # initialize variables
         self.score = IntVar()
+        self.question_num = IntVar()
 
         # set starting score to amount entered by user at start of game
         self.score.set(starting_score)
@@ -99,6 +101,8 @@ class Game:
         # list for holding stats
         self.round_stats_list = []
         self.game_stats_list = [starting_score, starting_score]
+        self.round_list = []
+        self.round_list.append(rounds)
 
         # GUI setup
         self.game_box = Toplevel()
@@ -111,7 +115,8 @@ class Game:
                                    padx=10, pady=10)
         self.heading_label.grid(row=0)
 
-        random_num = random.randint(0, 113)
+        random_num = random.randint(0, 111)
+        self.question_num.set(random_num)
 
         # print question and answer
         print("Question:{} | Answer:{}".format(self.questions[random_num], self.answers[random_num]))
@@ -151,7 +156,7 @@ class Game:
         # Play button goes here (row 2)
         self.enter_button = Button(self.enter_help_frame, text="Enter",
                                    bg="#FFFF33", font="Arial 15 bold",
-                                   command=lambda: self.check_answer(random_num, rounds, starting_score))
+                                   command=lambda: self.check_answer(starting_score))
         self.enter_button.grid(row=0, column=0, padx=2)
 
         # enter to play
@@ -161,7 +166,7 @@ class Game:
 
         self.next_button = Button(self.enter_help_frame, text="Next",
                                   bg="#33ff3d", font="Arial 15 bold",
-                                  command=lambda: self.next_game(starting_score, rounds))
+                                  command=lambda: self.next_game(starting_score))
         self.next_button.grid(row=0, column=1, padx=2)
         self.next_button.config(state=DISABLED)
 
@@ -177,6 +182,7 @@ class Game:
         # Help button
         self.help_button = Button(self.export_help_frame, text="Help / Rules",
                                   font="Arial 15 bold",
+                                  command=lambda: self.to_help,
                                   bg="#9233ff", fg="white")
         self.help_button.grid(row=0, column=0, padx=2)
 
@@ -187,13 +193,44 @@ class Game:
 
         # quit button
         self.quit_button = Button(self.game_frame, text="Quit", fg="white",
-                                  bg="#ff00dd", font="Arial 15 bold", width=20,    # 21 to make in line with help.
+                                  bg="#ff00dd", font="Arial 15 bold", width=20,
                                   command=self.to_quit)
         self.quit_button.grid(row=7, pady=10)
 
-    def check_answer(self, random_num, rounds, starting_score):
-        print(rounds)
+    def next_game(self, starting_scores):
+        rounds_2 = self.round_list[-1]
+
+        score = self.score.get()
+        print("$$$$ SCORE:{} $$$$$$$$$$$".format(score))
+        score_text = "Current Score: {}".format(score)
+        self.score_label.config(text=score_text)
+
+        print("**********************")
+        random_num = random.randint(0, 111)
+        self.question_num.set(random_num)
+        print(random_num)
+
+        print("Question:{} | Answer:{}".format(self.questions[random_num], self.answers[random_num]))
+
+        # change background to white
+        self.answer_entry.config(bg="white")
+        self.amount_error_label.config(text="")
+
+        self.question_label.config(text="#{}: What is the name\n of a young {}".
+                                   format(rounds_2, self.questions[random_num]))
+
+        self.answer_entry.delete(0, 'end')
+
         self.enter_button.config(state=NORMAL)
+        self.next_button.config(state=DISABLED)
+
+        # self.check_answer(random_num, starting_scores)
+
+    def check_answer(self, starting_score):
+        random_num = self.question_num.get()
+        print("check_answer, random_num is {}".format(random_num))
+        rounds_2 = self.round_list[-1]
+        print("rounds:{}".format(rounds_2))
 
         given_answer = self.answer_entry.get().lower()
 
@@ -202,8 +239,8 @@ class Game:
         has_errors = "no"
 
         # change background to white
-        # self.answer_entry.config(bg="white")
-        # self.amount_error_label.config(text="")
+        self.answer_entry.config(bg="white")
+        self.amount_error_label.config(text="")
 
         # disable all stakes buttons in case user changes mind and decreases amount entered
         self.enter_button.config(state=DISABLED)
@@ -220,47 +257,85 @@ class Game:
 
         if has_errors == "yes":
             self.answer_entry.config(bg=error_back)
-            self.amount_error_label.config(text=error_feedback)
+            self.amount_error_label.config(text=error_feedback, fg="red")
 
         elif given_answer != self.answers[random_num]:
+            print("!!! ANSWER WAS WRONG")
+            print("No Score Increase.")
             self.answer_entry.config(bg=error_back)
-            self.amount_error_label.config(text=error_feedback)
+            self.amount_error_label.config(text=error_feedback, fg="red")
 
         elif given_answer == self.answers[random_num]:
+            print("$$$ ANSWER WAS CORRECT")
             # set starting balance to amount entered by user
             # self.starting_scores.set(given_answer)
             self.answer_entry.config(bg="#afffb2")
             self.amount_error_label.config(text=correct_feedback, fg="#1abd1d")
-            score = starting_score + 1
-            print("Score:{}".format(score))
+            old_score = self.score.get()
+            new_score = old_score + 1
+            print("Old Score:{}".format(old_score))
+            print("New Score:{}".format(new_score))
+            self.score.set(new_score)
 
         # add round results to stats list
         round_summary = "Question:{}:{} | "\
                         "Given Answer:{} | " \
-                        "Correct Answer:{}".format(rounds, self.questions[random_num], given_answer,
+                        "Correct Answer:{}".format(rounds_2, self.questions[random_num], given_answer,
                                                    self.answers[random_num])
         self.round_stats_list.append(round_summary)
         print(self.round_stats_list)
         self.next_button.config(state=NORMAL)
-        rounds = rounds + 1
-        print(rounds)
+        rounds_2 += 1
+        self.round_list.append(rounds_2)
+        print("&&{}&&".format(rounds_2))
 
-        root.withdraw()
-        
-    def next_game(self, starting_scores, rounds):
-        # retrieve starting score
-        starting_score = 0
-        
-        # starting_score = self.starting_scores.get()
-        rounds = rounds + 1
-
-        Game(self, rounds, starting_score)
-
-        # hide start up window
         root.withdraw()
 
     def to_quit(self):
         root.destroy()
+
+    def to_help(self):
+        get_help = Help(self)
+
+
+class Help:
+    def __init__(self, partner):
+        # disable help button
+        partner.help_button.config(state=DISABLED)
+
+        # sets up child window
+        self.help_box = Toplevel()
+
+        # if user press cross at top closes help and 'releases' help button
+        self.help_box.protocol('WM_DELETE_WINDOW', partial(self.close_help, partner))
+
+        # set up gui frame
+        self.help_frame = Frame(self.help_box, width=300)
+        self.help_frame.grid()
+
+        # set up heading (row 0)
+        self.how_heading = Label(self.help_frame, text="Help / Instructions",
+                                 font="arial 14 bold")
+        self.how_heading.grid(row=0)
+
+        help_text = "help text"
+
+        # help text (label, row 1)
+        self.help_text = Label(self.help_frame, text=help_text,
+                               justify=LEFT, wrap=400, padx=10, pady=10)
+        self.help_text.grid(row=1)
+
+        # Dismiss button (row 2)
+        self.dismiss_btn = Button(self.help_frame, text="Dismiss",
+                                  width=10, bg="#660000", fg="white",
+                                  font="arial 15 bold", command=partial(self.close_help, partner))
+        self.dismiss_btn.grid(row=3, pady=10)
+
+    def close_help(self, partner):
+        # put calc history button back to normal
+        partner.help_button.config(state=NORMAL)
+        self.help_box.destroy()
+
 
 # main routine
 if __name__ == "__main__":
