@@ -89,6 +89,7 @@ class Game:
 
         # initialize variables
         self.score = IntVar()
+        self.question_num = IntVar()
 
         # set starting score to amount entered by user at start of game
         self.score.set(starting_score)
